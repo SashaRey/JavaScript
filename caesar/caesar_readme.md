@@ -33,14 +33,15 @@ const canonicalFrequencies = [
 ```javascript
 function calculateFrequencies(text) {
     const frequencies = new Array(26).fill(0);
-    const totalChars = text.replace(/[^a-zA-Z]/g, '').length;
+    let totalChars = 0;
 
-    text.toLowerCase().split('').forEach(char => {
-        if (/[a-z]/.test(char)) {
-            const index = char.charCodeAt(0) - 'a'.charCodeAt(0);
+    for (const char of text.toLowerCase()) {
+        const index = char.charCodeAt(0) - 'a'.charCodeAt(0);
+        if (index >= 0 && index < 26) { // Проверяем, является ли символ буквой
             frequencies[index]++;
+            totalChars++;
         }
-    });
+    }
 
     return frequencies.map(count => count / totalChars);
 }
